@@ -1,0 +1,16 @@
+<h1>Rails store</h1>
+
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Price</th>
+  </tr>
+  <% @items.each do |item| %>
+    <tr>
+      <td><%= item.name %></td>
+      <td><%= item.description %></td>
+      <td><%= number_to_currency item.price, delimiter: '.' %></td>
+    </tr>
+  <% end %>
+</table>
