@@ -5,12 +5,18 @@
     <th>Name</th>
     <th>Description</th>
     <th>Price</th>
+    <th></th>
   </tr>
   <% @items.each do |item| %>
     <tr>
       <td><%= item.name %></td>
       <td><%= item.description %></td>
-      <td><%= number_to_currency item.price, delimiter: '.' %></td>
+      <td><%= number_to_currency item.price %></td>
+      <%= form_with url: new_order_url, method: :get do |form| %>
+        <%= form.hidden_field :item_id, value: item.id %>
+        <td><%= form.number_field :quantity, min: 1 %></td>
+        <td><%= form.submit 'To cart'%></td>
+      <% end %>
     </tr>
   <% end %>
 </table>

@@ -1,0 +1,27 @@
+<% if @orders && @orders.length > 0 %>
+  <table class="table">
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th></th>
+    </tr>
+    <% @orders.each do |order|%>
+      <tr>
+        <td><%= order[:name] %></td>
+        <td><%= number_to_currency order[:price] %></td>
+        <td><%= order[:quantity] %></td>
+        <td><%= link_to 'remove', remove_from_cart_path(order[:index]), method: :delete %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="4" class="summary">
+        Overall price: <%= number_to_currency @total_amount %>
+      </td>
+    </tr>
+  </table>
+  <%= link_to 'Buy', orders_path, method: :post %>
+  <%= link_to 'Empty cart', clear_cart_path, :'data-turbolinks' => false %>
+<% else %>
+  Cart is empty
+<% end %>
