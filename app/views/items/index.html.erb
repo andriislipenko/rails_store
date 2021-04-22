@@ -1,22 +1,32 @@
 <h1>Rails store</h1>
 
-<table class="table">
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Price</th>
-    <th></th>
-  </tr>
-  <% @items.each do |item| %>
-    <tr>
-      <td><%= item.name %></td>
-      <td><%= item.description %></td>
-      <td><%= number_to_currency item.price %></td>
-      <%= form_with url: new_order_url, method: :get do |form| %>
-        <%= form.hidden_field :item_id, value: item.id %>
-        <td><%= form.number_field :quantity, min: 1 %></td>
-        <td><%= form.submit 'To cart'%></td>
-      <% end %>
-    </tr>
+<% if @items %>
+  <%= form_with url: root_url, method: :get do |form| %>
+    <%= form.text_field :query, value: params[:query] || '' %>
+    <%= form.submit 'Search' %>
   <% end %>
-</table>
+  <br/>
+  <table class="table">
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.name %></td>
+        <td><%= item.description %></td>
+        <td><%= number_to_currency item.price %></td>
+        <%= form_with url: new_order_url, method: :get do |form| %>
+          <%= form.hidden_field :search_query, value: params[:query] || '' %>
+          <%= form.hidden_field :item_id, value: item.id %>
+          <td><%= form.number_field :quantity, min: 1 %></td>
+          <td><%= form.submit 'To cart'%></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <h1>Store now empty</h1>
+<% end %>

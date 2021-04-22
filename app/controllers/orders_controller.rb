@@ -8,7 +8,8 @@ class OrdersController < ApplicationController
   def new
     save_order_to_session params[:item_id], params[:quantity].to_i
 
-    redirect_to root_path
+    appendix = params[:search_query].blank? ? '' : "?query=#{params[:search_query]}"
+    redirect_to root_path + appendix
   end
 
   def create
