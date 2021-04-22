@@ -1,6 +1,10 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @orders = current_user.orders
+  end
+
   def new
     save_order_to_session params[:item_id], params[:quantity].to_i
 
@@ -8,18 +12,13 @@ class OrdersController < ApplicationController
   end
 
   def create
-    orders_to_save = init_orders_to_save
+    order_to_save = init_order_to_save
 
-    unsaved_orders = orders_to_save.filter do |order|
-      !order.save
-    end
-
-    if unsaved_orders.empty?
+    if order_to_save.save
       empty_session_cart
       redirect_to :root, notice: 'Purchased successfully!'
     else
-      flash[:notice] = 'Unsuccessful to save remaining!'
-      set_orders_from_unsaved_orders unsaved_orders
+      flash[:notice] = 'Failed to save order!'
       render 'show_cart'
     end
   end
@@ -70,28 +69,19 @@ class OrdersController < ApplicationController
     end
   end
 
-  def set_orders_from_unsaved_orders orders
-    empty_session_cart
+  def init_order_to_save
+    order_to_save = current_user.orders.new
+    amount = 0
 
-    orders.each do |order|
-      session[:order] << {
-        tem_id: order.order_description.item.id,
-        quantity: order.order_description.quantity
-      }
-    end
-
-    map_orders_from_session
-  end
-
-  def init_orders_to_save
-    session[:orders].map do |order|
+    order_to_save.order_descriptions = session[:orders].map do |order|
       item = Item.find(order['item_id'])
 
-      order_to_save = current_user.orders.new(amount: item.price * order['quantity'].to_i)
-      order_to_save.order_description = OrderDescription.new(order: order_to_save, item: item, quantity: order['quantity'])
-
-      order_to_save
+      amount += item.price * order['quantity'].to_i
+      OrderDescription.new(order: order_to_save, item: item, quantity: order['quantity'])
     end
+
+    order_to_save.amount = amount
+    order_to_save
   end
 
   def empty_session_cart

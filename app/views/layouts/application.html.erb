@@ -13,8 +13,9 @@
   <body>
     <%= link_to 'Home', root_path, :'data-turbolinks' => false %> |
     <% if user_signed_in? %>
-      <%= link_to 'Sign out', destroy_user_session_path, method: :delete%> |
-      <%= link_to 'Cart', cart_path, :'data-turbolinks' => false %>
+      <%= link_to 'Cart', cart_path, :'data-turbolinks' => false %> |
+      <%= link_to 'Orders history', orders_path %> |
+      <%= link_to 'Sign out', destroy_user_session_path, method: :delete%>
     <% end %>
 
     <p class='notice'><%= notice %></p>

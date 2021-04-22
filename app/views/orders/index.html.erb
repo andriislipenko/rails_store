@@ -1,0 +1,21 @@
+<% if @orders.any? %>
+  <table class="table">
+    <% @orders.each do |order| %>
+      <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Quantity</th>
+      </tr>
+      <% order.order_descriptions.each do |desc| %>
+        <tr>
+          <td><%= desc.item.name %></td>
+          <td><%= number_to_currency desc.item.price %></td>
+          <td><%= desc.quantity %></td>
+        </tr>
+      <% end %>
+      <td class="summary" colspan="3">Total: <%= number_to_currency order.amount %></td>
+    <% end %>
+  </table>
+<% else %>
+  <h1>No orders yet</h1>
+<% end %>
