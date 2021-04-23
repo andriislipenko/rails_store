@@ -4,7 +4,7 @@ class Item < ApplicationRecord
   validates :name, presence: true
   validates :price, numericality: { greater_than: 0 }
 
-  def self.search(query)
+  scope :search_by_name, -> (query) do
     where('lower(name) LIKE :query', query: "%#{query.downcase}%")
   end
 end

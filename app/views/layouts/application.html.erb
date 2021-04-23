@@ -15,6 +15,7 @@
     <% if user_signed_in? %>
       <%= link_to 'Cart', cart_path, :'data-turbolinks' => false %> |
       <%= link_to 'Orders history', orders_path %> |
+      <%= link_to('Users', users_path) + ' | ' if current_user.admin? %>
       <%= link_to 'Sign out', destroy_user_session_path, method: :delete%>
     <% end %>
 

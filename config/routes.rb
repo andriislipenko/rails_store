@@ -2,7 +2,12 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'users/registrations'}
 
   root 'items#index'
-  resources :items
+
+  scope '/admin' do
+    resources :users, except: [:show], as: 'users'
+    resources :items, except: [:index, :show], as: 'items'
+  end
+
   resources :orders, only: [:index, :new, :create]
 
   get '/cart', to: 'orders#show_cart', as: 'cart'

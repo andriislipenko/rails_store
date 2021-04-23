@@ -1,0 +1,34 @@
+<%= form_with model: user do |form| %>
+  <div>
+    <div><%= form.label :email %></div>
+    <div><%= form.text_field :email, autofocus: true %></div>
+  </div>
+  <div>
+    <div><%= form.label :first_name %></div>
+    <div><%= form.text_field :first_name %></div>
+  </div>
+  <div>
+    <div><%= form.label :last_name %></div>
+    <div><%= form.text_field :last_name %></div>
+  </div>
+  <div>
+    <div><%= form.label :role %></div>
+    <div><%= form.select :role, ['user', 'admin'], { selected: 'user' } %></div>
+  </div>
+  <% if new %>
+    <div>
+      <div><%= form.label :password %></div>
+      <div><%= form.password_field :password %></div>
+    </div>
+  <% end %>
+  <% unless user.errors.empty? %>
+    <ul>
+      <% user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

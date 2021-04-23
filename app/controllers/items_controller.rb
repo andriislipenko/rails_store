@@ -1,10 +1,12 @@
 class ItemsController < ApplicationController
+  include AdminCheck
+
   before_action :authenticate_user!
   before_action :admin?, except: [:index]
 
   def index
     unless params[:query].blank?
-      @items = Item.search(params[:query])
+      @items = Item.search_by_name(params[:query])
       return
     end
 
@@ -50,9 +52,5 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(:name, :description, :price)
-  end
-
-  def admin?
-    redirect_to root_path, notice: 'Permission denied!' unless current_user.admin?
   end
 end
