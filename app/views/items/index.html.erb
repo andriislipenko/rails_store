@@ -17,15 +17,17 @@
         <td><%= item.name %></td>
         <td><%= item.description %></td>
         <td><%= number_to_currency item.price %></td>
-        <%= form_with url: new_order_url, method: :get do |form| %>
-          <%= form.hidden_field :search_query, value: params[:query] || '' %>
-          <%= form.hidden_field :item_id, value: item.id %>
-          <td><%= form.number_field :quantity, min: 1 %></td>
-          <td><%= form.submit 'To cart'%></td>
-        <% end %>
-        <% if current_user.admin? %>
-          <td><%= link_to 'Edit', edit_item_path(item) %></td>
-          <td><%= link_to 'Delete', item_path(item), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if current_user %>
+          <%= form_with url: new_order_url, method: :get do |form| %>
+            <%= form.hidden_field :search_query, value: params[:query] || '' %>
+            <%= form.hidden_field :item_id, value: item.id %>
+            <td><%= form.number_field :quantity, min: 1 %></td>
+            <td><%= form.submit 'To cart'%></td>
+          <% end %>
+          <% if current_user.admin? %>
+            <td><%= link_to 'Edit', edit_item_path(item) %></td>
+            <td><%= link_to 'Delete', item_path(item), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
         <% end %>
       </tr>
     <% end %>
@@ -34,6 +36,6 @@
   <h1>Store now empty</h1>
 <% end %>
 
-<% if current_user.admin? %>
+<% if current_user&.admin? %>
   <%= link_to 'New', new_item_path %>
 <% end %>

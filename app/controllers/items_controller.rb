@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   include AdminCheck
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index]
   before_action :admin?, except: [:index]
 
   def index
