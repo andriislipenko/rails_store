@@ -1,0 +1,24 @@
+<%= form_with model: item do |form| %>
+  <div>
+    <div><%= form.label :name %></div>
+    <div><%= form.text_field :name, autofocus: true %></div>
+  </div>
+  <div>
+    <div><%= form.label :description %></div>
+    <div><%= form.text_area :description %></div>
+  </div>
+  <div>
+    <div><%= form.label :price %></div>
+    <div><%= form.number_field :price, step: 0.01, min: 0.01 %></div>
+  </div>
+  <% unless item.errors.empty? %>
+    <ul>
+      <% item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

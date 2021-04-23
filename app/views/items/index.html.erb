@@ -11,7 +11,6 @@
       <th>Name</th>
       <th>Description</th>
       <th>Price</th>
-      <th></th>
     </tr>
     <% @items.each do |item| %>
       <tr>
@@ -24,9 +23,17 @@
           <td><%= form.number_field :quantity, min: 1 %></td>
           <td><%= form.submit 'To cart'%></td>
         <% end %>
+        <% if current_user.admin? %>
+          <td><%= link_to 'Edit', edit_item_path(item) %></td>
+          <td><%= link_to 'Delete', item_path(item), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </table>
 <% else %>
   <h1>Store now empty</h1>
+<% end %>
+
+<% if current_user.admin? %>
+  <%= link_to 'New', new_item_path %>
 <% end %>

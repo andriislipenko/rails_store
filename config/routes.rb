@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'users/registrations'}
 
   root 'items#index'
+  resources :items
   resources :orders, only: [:index, :new, :create]
 
   get '/cart', to: 'orders#show_cart', as: 'cart'
