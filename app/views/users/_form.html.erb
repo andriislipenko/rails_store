@@ -1,34 +1,52 @@
 <%= form_with model: user do |form| %>
-  <div>
-    <div><%= form.label :email %></div>
-    <div><%= form.text_field :email, autofocus: true %></div>
+  <div class="my-2">
+    <div><%= form.label :email, class: 'form-label' %></div>
+    <div><%= form.text_field :email, autofocus: true, class: 'form-control' %></div>
+    <div class="text-danger my-1">
+      <% user.errors[:email]&.each do |message| %>
+        <div>* <%= message %></div>
+      <% end %>
+    </div>
   </div>
-  <div>
-    <div><%= form.label :first_name %></div>
-    <div><%= form.text_field :first_name %></div>
+  <div class="my-2">
+    <div><%= form.label :first_name, class: 'form-label'%></div>
+    <div><%= form.text_field :first_name, class: 'form-control' %></div>
+    <div class="text-danger my-1">
+      <% user.errors[:first_name]&.each do |message| %>
+        <div>* <%= message %></div>
+      <% end %>
+    </div>
   </div>
-  <div>
-    <div><%= form.label :last_name %></div>
-    <div><%= form.text_field :last_name %></div>
+  <div class="my-2">
+    <div><%= form.label :last_name, class: 'form-label' %></div>
+    <div><%= form.text_field :last_name, class: 'form-control' %></div>
+    <div class="text-danger my-1">
+      <% user.errors[:last_name]&.each do |message| %>
+        <div>* <%= message %></div>
+      <% end %>
+    </div>
   </div>
-  <div>
-    <div><%= form.label :role %></div>
-    <div><%= form.select :role, ['user', 'admin'], { selected: 'user' } %></div>
+  <div class="my-2">
+    <div><%= form.label :role, class: 'form-label'%></div>
+    <div><%= form.select :role, ['user', 'admin'], { selected: 'user' }, class: 'form-select' %></div>
+    <div class="text-danger my-1">
+      <% user.errors[:role]&.each do |message| %>
+        <div>* <%= message %></div>
+      <% end %>
+    </div>
   </div>
   <% if new %>
-    <div>
-      <div><%= form.label :password %></div>
-      <div><%= form.password_field :password %></div>
+    <div class="my-2">
+      <div><%= form.label :password, class: 'form-label' %></div>
+      <div><%= form.password_field :password, class: 'form-control' %></div>
+      <div class="text-danger my-1">
+        <% user.errors[:password]&.each do |message| %>
+          <div>* <%= message %></div>
+        <% end %>
+      </div>
     </div>
   <% end %>
-  <% unless user.errors.empty? %>
-    <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  <% end %>
   <div>
-    <%= form.submit %>
+    <%= form.submit class: 'btn btn-primary my-3' %>
   </div>
 <% end %>
