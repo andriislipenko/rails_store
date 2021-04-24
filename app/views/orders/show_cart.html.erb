@@ -1,27 +1,41 @@
 <% if @orders && @orders.length > 0 %>
-  <table class="table">
-    <tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th>Quantity</th>
-      <th></th>
-    </tr>
-    <% @orders.each do |order|%>
+  <div class="d-flex flex-row align-items-center">
+    <div class="me-auto">
+      <h3>Shopping cart</h3>
+    </div>
+    <div>
+      <%= link_to 'Buy', orders_path, method: :post, class: 'btn btn-sm btn-success me-2' %>
+    </div>
+    <div>
+      <%= link_to 'Empty cart', clear_cart_path, :'data-turbolinks' => false, class: 'btn btn-sm btn-danger' %>
+    </div>
+  </div>
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <td><%= order[:name] %></td>
-        <td><%= number_to_currency order[:price] %></td>
-        <td><%= order[:quantity] %></td>
-        <td><%= link_to 'remove', remove_from_cart_path(order[:index]), method: :delete %></td>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
       </tr>
-    <% end %>
-    <tr>
-      <td colspan="4" class="summary">
-        Overall price: <%= number_to_currency @total_amount %>
-      </td>
-    </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order|%>
+        <tr>
+          <td><%= order[:name] %></td>
+          <td><%= number_to_currency order[:price] %></td>
+          <td><%= order[:quantity] %></td>
+          <td class="fit">
+            <%= link_to 'remove', remove_from_cart_path(order[:index]), method: :delete, class: 'btn btn-sm btn-outline-danger' %>
+          </td>
+        </tr>
+      <% end %>
+      <tr>
+        <td colspan="3" class="table-dark">
+          Overall price: <%= number_to_currency @total_amount %>
+        </td>
+      </tr>
+    </tbody>
   </table>
-  <%= link_to 'Buy', orders_path, method: :post %>
-  <%= link_to 'Empty cart', clear_cart_path, :'data-turbolinks' => false %>
 <% else %>
-  Cart is empty
+  <h3 class="text-center">Cart is empty</h3>
 <% end %>
