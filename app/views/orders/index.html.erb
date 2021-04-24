@@ -1,21 +1,39 @@
 <% if @orders.any? %>
-  <table class="table">
+  <h3 class="mb-3">Orders history</h3>
+  <div class="accordion" id="accordionExample">
     <% @orders.each do |order| %>
-      <tr>
-        <th>Item</th>
-        <th>Price</th>
-        <th>Quantity</th>
-      </tr>
-      <% order.order_descriptions.each do |desc| %>
-        <tr>
-          <td><%= desc.item.name %></td>
-          <td><%= number_to_currency desc.item.price %></td>
-          <td><%= desc.quantity %></td>
-        </tr>
-      <% end %>
-      <td class="summary" colspan="3">Total: <%= number_to_currency order.amount %></td>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a<%= order.created_at.strftime('%s') %>" aria-expanded="false" aria-controls="collapseOne">
+            <%= order.created_at.strftime('%H:%M %d.%m.%y') %> for <%= number_to_currency order.amount %>
+          </button>
+        </h2>
+        <div id="a<%= order.created_at.strftime('%s') %>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% order.order_descriptions.each do |desc| %>
+                  <tr>
+                    <td><%= desc.item.name %></td>
+                    <td><%= number_to_currency desc.item.price %></td>
+                    <td><%= desc.quantity %></td>
+                  </tr>
+                <% end %>
+                <td class="table-dark" colspan="3">Total: <%= number_to_currency order.amount %></td>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     <% end %>
-  </table>
+  </div>
 <% else %>
-  <h1>No orders yet</h1>
+  <h3 class="text-center">No orders yet</h3>
 <% end %>
