@@ -1,4 +1,11 @@
-<h1>Users</h1>
+<div class="d-flex flex-row align-items-center">
+  <div class="me-auto">
+    <h3>Users</h3>
+  </div>
+  <div>
+    <%= link_to '+ New', new_user_path, class: 'btn btn-sm btn-success me-2' %>
+  </div>
+</div>
 
 <% if @users.any? %>
   <table class="table">
@@ -17,13 +24,12 @@
           <td><%= user.first_name %></td>
           <td><%= user.last_name %></td>
           <td><%= user.role %></td>
-          <td><%= link_to 'Edit', edit_user_path(user) %></td>
-          <td><%= link_to 'Delete', user_path(user), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td class="fit"><%= link_to 'Edit', edit_user_path(user), class: 'btn btn-sm btn-outline-primary' %></td>
+          <td class="fit"><%= link_to 'Delete', user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-outline-danger' %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <%= link_to 'New', new_user_path %>
 <% else %>
   No users
 <% end %>
