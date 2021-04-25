@@ -51,5 +51,10 @@
     </tbody>
   </table>
 <% else %>
-  <h1 class="text-center">Store now empty</h1>
+  <h1 class="text-center">
+    Store now empty
+    <% if current_user&.admin? %>
+      <%= link_to '+ Add item', new_item_path, class: 'btn btn-sm btn-success ms-3' %>
+    <% end %>
+  </h1>
 <% end %>
