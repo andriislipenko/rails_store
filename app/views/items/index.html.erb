@@ -1,19 +1,19 @@
-<% if @items.any? %>
-    <div class="d-flex flex-row mt-3 mx-1">
-      <div class="me-auto">
-        <% if current_user&.admin? %>
-          <%= link_to '+ New', new_item_path, class: 'btn btn-sm btn-success' %>
-        <% end %>
-      </div>
-      <%= form_with url: root_url, method: :get, class: 'row justify-content-end g-2' do |form| %>
-        <div class="col-auto">
-          <%= form.text_field :query, value: params[:query] || '', class: 'form-control form-control-sm' %>
-        </div>
-        <div class="col-auto">
-          <%= form.submit 'Search', class: 'btn btn-outline-secondary btn-sm' %>
-        </div>
-      <% end %>
+<div class="d-flex flex-row mt-3 mx-1">
+  <div class="me-auto">
+    <% if current_user&.admin? %>
+      <%= link_to '+ New', new_item_path, class: 'btn btn-sm btn-success' %>
+    <% end %>
+  </div>
+  <%= form_with url: root_url, method: :get, class: 'row justify-content-end g-2' do |form| %>
+    <div class="col-auto">
+      <%= form.text_field :query, value: params[:query] || '', class: 'form-control form-control-sm' %>
     </div>
+    <div class="col-auto">
+      <%= form.submit 'Search', class: 'btn btn-outline-secondary btn-sm' %>
+    </div>
+  <% end %>
+</div>
+<% if @items.any? %>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -51,10 +51,5 @@
     </tbody>
   </table>
 <% else %>
-  <h1 class="text-center">
-    Store now empty
-    <% if current_user&.admin? %>
-      <%= link_to '+ Add item', new_item_path, class: 'btn btn-sm btn-success ms-3' %>
-    <% end %>
-  </h1>
+  <h3 class="text-center mt-3">No items found</h3>
 <% end %>

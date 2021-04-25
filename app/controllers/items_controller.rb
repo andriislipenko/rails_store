@@ -23,7 +23,7 @@ class ItemsController < ApplicationController
     if @item.save
       redirect_to root_path, notice: 'Saved!'
     else
-      render new_item_path(@item)
+      render 'new'
     end
   end
 

@@ -9,6 +9,7 @@ class OrdersController < ApplicationController
     save_order_to_session params[:item_id], params[:quantity].to_i
 
     appendix = params[:search_query].blank? ? '' : "?query=#{params[:search_query]}"
+    flash[:notice] = 'Added to cart.'
     redirect_to root_path + appendix
   end
 

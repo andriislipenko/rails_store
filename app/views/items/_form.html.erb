@@ -1,24 +1,32 @@
 <%= form_with model: item do |form| %>
-  <div>
-    <div><%= form.label :name %></div>
-    <div><%= form.text_field :name, autofocus: true %></div>
-  </div>
-  <div>
-    <div><%= form.label :description %></div>
-    <div><%= form.text_area :description %></div>
-  </div>
-  <div>
-    <div><%= form.label :price %></div>
-    <div><%= form.number_field :price, step: 0.01, min: 0.01 %></div>
-  </div>
-  <% unless item.errors.empty? %>
-    <ul>
-      <% item.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <div class="my-2">
+    <div><%= form.label :name, class: 'form-label' %></div>
+    <div><%= form.text_field :name, autofocus: true, class: 'form-control' %></div>
+    <div class="text-danger my-1">
+      <% item.errors[:name]&.each do |message| %>
+        <div>* <%= message %></div>
       <% end %>
-    </ul>
-  <% end %>
+    </div>
+  </div>
+  <div class="my-2">
+    <div><%= form.label :description, class: 'form-label' %></div>
+    <div><%= form.text_area :description, class: 'form-control' %></div>
+    <div class="text-danger my-1">
+      <% item.errors[:description]&.each do |message| %>
+        <div>* <%= message %></div>
+      <% end %>
+    </div>
+  </div>
+  <div class="my-2">
+    <div><%= form.label :price, class: 'form-label' %></div>
+    <div><%= form.number_field :price, step: 0.01, min: 0.01, class: 'form-control' %></div>
+    <div class="text-danger my-1">
+      <% item.errors[:price]&.each do |message| %>
+        <div>* <%= message %></div>
+      <% end %>
+    </div>
+  </div>
   <div>
-    <%= form.submit %>
+    <%= form.submit class: 'btn btn-primary my-3' %>
   </div>
 <% end %>
