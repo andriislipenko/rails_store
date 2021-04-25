@@ -1,4 +1,4 @@
-<% if @items %>
+<% if @items.any? %>
     <div class="d-flex flex-row mt-3 mx-1">
       <div class="me-auto">
         <% if current_user&.admin? %>
@@ -51,5 +51,5 @@
     </tbody>
   </table>
 <% else %>
-  <h1>Store now empty</h1>
+  <h1 class="text-center">Store now empty</h1>
 <% end %>
